@@ -1,4 +1,6 @@
 import os
+import shutil  #ファイル異動で使う（次ステップ用）
+
 
 #拡張仕事の移動先フォルダ名
 EXTENSION_MAP = {
@@ -32,7 +34,15 @@ def origanize_folder(target_folder):
         #フォルダは対象外にしてファイルだけ見る
         if os.path.isfile(item_path):
             folder_name = get_folder_name(item_name)
-        print(f"{item_name} → {folder_name}")
+            
+            target_folder_path = os.path.join(target_folder, folder_name)  #移動先フォルダのパスを作る
+
+            #フォルダがなければ作成する
+            if not os.path.exists(target_folder_path):
+                os.makedirs(target_folder_path)
+                print(f"{folder_name} フォルダを作成しました")
+
+            print(f"{item_name} → {folder_name}")
 
 
 #プログラムの開始位置
