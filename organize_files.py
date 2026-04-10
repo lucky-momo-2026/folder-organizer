@@ -22,6 +22,24 @@ def get_folder_name(file_name):
         return EXTENSION_MAP[ext] 
     return "その他"  #登録されていない拡張子は「その他」にする
 
+#同じ名前のファイルがある時に重複しない名前を作る　例”sample.csv → sample_1.csv
+def get_unique_file_path(target_folder_path, file_name):
+    #元のファイル名を「名前」と「拡張子」に分ける
+    name, ext = os.path.splitext(file_name)
+
+    #最初はそのままの名前を使う
+    new_file_name = file_name 
+    new_file_path = os.path.join(target_folder_path, new_file_name)
+
+    #同じ名前のファイルがある限り、連番を付ける
+    count = 1
+    while os.path.exists(new_file_path):
+        new_file_name = f"{name}_{count}{ext}"
+        new_file_path = os.path.join(target_folder_path, new_file_name)
+        count += 1
+    
+    return new_file_path
+
 # フォルダ整理ツールのメイン処理　今はファイルごとの移動先フォルダ名を表示する
 def organize_folder(target_folder):
     log_file = open("log.txt", "a", encoding="utf-8")  #ログファイルを追記モードで開く
@@ -50,12 +68,16 @@ def organize_folder(target_folder):
                 os.makedirs(target_folder_path)
                 print(f"{folder_name} フォルダを作成しました")
 
-            #移動元ファイルのパスと移動先のファイルのパスを作る
-            target_file_path = os.path.join(target_folder_path, item_name)
+            #上書きしない移動先のファイルパスを作る
+            target_file_path = get_unique_file_path(target_folder_path, item_name)
             
             #ファイルを移動する
             shutil.move(item_path, target_file_path)
-            print(f"{item_name} → {folder_name} に移動しました")
+
+            #字z際に保存されたファイル名を取得する
+            moved_file_name = os.path.basename(target_file_path)            
+
+            print(f"{item_name} → {folder_name}/{moved_file_name} に移動しました")
             log_file.write(f"{item_name} → {folder_name} に移動しました\n")  #log_file.write()ファイルに文字を書き込む命令
         
     log_file.close()  #ログファイルを閉じる
