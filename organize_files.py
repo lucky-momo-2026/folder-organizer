@@ -22,7 +22,7 @@ def get_folder_name(file_name):
     return "その他"  #登録されていない拡張子は「その他」にする
 
 # フォルダ整理ツールのメイン処理　今はファイルごとの移動先フォルダ名を表示する
-def origanize_folder(target_folder):
+def organize_folder(target_folder):
     if not os.path.exists(target_folder):  #指定したフォルダが存在するか確認する
         print("フォルダが見つかりません")
         return
@@ -33,6 +33,11 @@ def origanize_folder(target_folder):
 
         #フォルダは対象外にしてファイルだけ見る
         if os.path.isfile(item_path):
+
+            #実行中このPythonファイル自身は移動しない
+            if item_name == "organize_files.py":
+                continue
+
             folder_name = get_folder_name(item_name)
             
             target_folder_path = os.path.join(target_folder, folder_name)  #移動先フォルダのパスを作る
@@ -42,11 +47,16 @@ def origanize_folder(target_folder):
                 os.makedirs(target_folder_path)
                 print(f"{folder_name} フォルダを作成しました")
 
-            print(f"{item_name} → {folder_name}")
+            #移動元ファイルのパスと移動先のファイルのパスを作る
+            target_file_path = os.path.join(target_folder_path, item_name)
+            
+            #ファイルを移動する
+            shutil.move(item_path, target_file_path)
+            print(f"{item_name} → {folder_name} に移動しました")
 
 
 #プログラムの開始位置
 if __name__ == "__main__":
     #今回は自分のるフォルダを対象にする
     current_folder = os.getcwd()
-    origanize_folder(current_folder)
+    organize_folder(current_folder)
