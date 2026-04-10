@@ -1,0 +1,2 @@
+sample.csv → CSV に移動しました
+test.txt → その他 に移動しました

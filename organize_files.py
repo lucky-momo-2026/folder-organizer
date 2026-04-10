@@ -9,6 +9,7 @@ EXTENSION_MAP = {
     ".jpg": "画像",
     ".jpeg": "画像",
     ".pdf": "PDF"
+
 }
 # 拡張子から移動先フォルダ名を決める/該当しない拡張子は「その他」にする
 def get_folder_name(file_name):
@@ -23,6 +24,8 @@ def get_folder_name(file_name):
 
 # フォルダ整理ツールのメイン処理　今はファイルごとの移動先フォルダ名を表示する
 def organize_folder(target_folder):
+    log_file = open("log.txt", "a", encoding="utf-8")  #ログファイルを追記モードで開く
+
     if not os.path.exists(target_folder):  #指定したフォルダが存在するか確認する
         print("フォルダが見つかりません")
         return
@@ -35,7 +38,7 @@ def organize_folder(target_folder):
         if os.path.isfile(item_path):
 
             #実行中このPythonファイル自身は移動しない
-            if item_name == "organize_files.py":
+            if item_name == "organize_files.py" or item_name == "log.txt" :
                 continue
 
             folder_name = get_folder_name(item_name)
@@ -53,6 +56,10 @@ def organize_folder(target_folder):
             #ファイルを移動する
             shutil.move(item_path, target_file_path)
             print(f"{item_name} → {folder_name} に移動しました")
+            log_file.write(f"{item_name} → {folder_name} に移動しました\n")  #log_file.write()ファイルに文字を書き込む命令
+        
+    log_file.close()  #ログファイルを閉じる
+            
 
 
 #プログラムの開始位置
