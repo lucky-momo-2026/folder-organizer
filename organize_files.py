@@ -55,7 +55,10 @@ def organize_folder(target_folder):
     
     #フォルダではなくファイルが指定された場合のチェック
     if not os.path.isdir(target_folder):
-        print(f"フォルダではありません：{target_folder}")
+        error_massage = f"フォルダではありません：{target_folder}"
+        print(error_massage)
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_file.write(f"[{now}] ERROR: {error_massage}\n")
         return
     
     #フォルダ内の名前を１つずつ取り出す
