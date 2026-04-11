@@ -43,7 +43,7 @@ def get_unique_file_path(target_folder_path, file_name):
     return new_file_path
 
 # フォルダ整理ツールのメイン処理　今はファイルごとの移動先フォルダ名を表示する
-def organize_folder(target_folder):
+def organize_folder(target_folder, dry_run):
     log_file = open("log.txt", "a", encoding="utf-8")  #ログファイルを追記モードで開く
 
     if not os.path.exists(target_folder):  #指定したフォルダが存在するか確認する
@@ -83,28 +83,38 @@ def organize_folder(target_folder):
 
             #上書きしない移動先のファイルパスを作る
             target_file_path = get_unique_file_path(target_folder_path, item_name)
-            
-            #ファイルを移動する
-            shutil.move(item_path, target_file_path)
 
             #実際に保存されたファイル名を取得する
-            moved_file_name = os.path.basename(target_file_path)            
+            saved_file_name = os.path.basename(target_file_path)             
 
-            print(f"{item_name} → {folder_name}/{moved_file_name} に移動しました")
-            now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  #現在の日時を文字にする
-            log_file.write(f"[{now}] {item_name} → {folder_name} に移動しました\n")  #log_file.write()ファイルに文字を書き込む命令
+            #現在の日時を文字にする
+            now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  
+
+            #dry-runのときは移動せず表示とログだけ行う
+            if dry_run:
+                print(f"[DRY_RUN] {item_name} → {folder_name}/{saved_file_name}")
+                log_file.write(f"[{now}] [DRY-RUN] {item_name} → {folder_name}/{saved_file_name}\n")
+            else:
+                shutil.move(item_path, target_file_path)
+                print(f"{item_name} → {folder_name}/{saved_file_name} に移動しました")    
+                log_file.write(f"[{now}] {item_name} → {folder_name}/{saved_file_name} に移動しました\n")
         
     log_file.close()  #ログファイルを閉じる
-            
-
 
 #プログラムの開始位置
 if __name__ == "__main__":
+    dry_run = False  #初期は通常モード
+
+    if "--dry-run" in sys.argv:
+        dry_run = True
+        sys.argv.remove("--dry-run")  #引数から削除
+
     #引数があれば、、そのフォルダを整理対象にする
     if len(sys.argv) > 1:
         target_folder = sys.argv[1]
     else:
         #引数がないときは今いるフォルダを対象にする
         target_folder = os.getcwd()
-    organize_folder(target_folder)
+
+    organize_folder(target_folder, dry_run)
 
