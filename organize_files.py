@@ -1,6 +1,7 @@
 import os
-import sys #コマンドライン引数を受け取るため
 import shutil  #ファイル異動で使う（次ステップ用）
+import sys #コマンドライン引数を受け取るため
+from datetime import datetime  #ログに日時を入れる
 
 
 #拡張仕事の移動先フォルダ名
@@ -48,11 +49,12 @@ def organize_folder(target_folder):
     if not os.path.exists(target_folder):  #指定したフォルダが存在するか確認する
         error_massage = f"フォルダが見つかりません：{target_folder}"
         print(error_massage)
-        log_file.write(f"ERROR: {error_massage}\n")  #エラーもログに残す
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_file.write(f"[{now}] ERROR: {error_massage}\n")  #エラーもログに残す
         return
     
     #フォルダではなくファイルが指定された場合のチェック
-    if not os.path.isdier(target_folder):
+    if not os.path.isdir(target_folder):
         print(f"フォルダではありません：{target_folder}")
         return
     
@@ -86,7 +88,8 @@ def organize_folder(target_folder):
             moved_file_name = os.path.basename(target_file_path)            
 
             print(f"{item_name} → {folder_name}/{moved_file_name} に移動しました")
-            log_file.write(f"{item_name} → {folder_name} に移動しました\n")  #log_file.write()ファイルに文字を書き込む命令
+            now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  #現在の日時を文字にする
+            log_file.write(f"[{now}] {item_name} → {folder_name} に移動しました\n")  #log_file.write()ファイルに文字を書き込む命令
         
     log_file.close()  #ログファイルを閉じる
             
