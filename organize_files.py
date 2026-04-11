@@ -46,7 +46,7 @@ def organize_folder(target_folder):
     log_file = open("log.txt", "a", encoding="utf-8")  #ログファイルを追記モードで開く
 
     if not os.path.exists(target_folder):  #指定したフォルダが存在するか確認する
-        print("フォルダが見つかりません")
+        print(f"フォルダが見つかりません：{target_folder}")
         return
     
     #フォルダ内の名前を１つずつ取り出す
