@@ -66,7 +66,7 @@ def organize_file(file_path, dry_run):
 
     if dry_run:
         print(f"[DRY-RUN] {file_name} → {folder_name}/{saved_file_name}")
-        log_file.write(f"[{now}] [DRY-RUN] {file_name} → {folder_name}/{saved_file_name}/n")
+        log_file.write(f"[{now}] [DRY-RUN] {file_name} → {folder_name}/{saved_file_name}\n")
     else:
         shutil.move(file_path, target_file_path)
         print(f"{file_name} → {folder_name}/{saved_file_name} に移動しました")
