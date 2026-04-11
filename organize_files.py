@@ -42,6 +42,11 @@ def get_unique_file_path(target_folder_path, file_name):
     
     return new_file_path
 
+#１ファイルだけ整理する処理
+def organize_file(file_path, dry_run):
+    print("ここに１ファイル処理を書いていきます")
+
+
 # フォルダ整理ツールのメイン処理　今はファイルごとの移動先フォルダ名を表示する
 def organize_folder(target_folder, dry_run):
     log_file = open("log.txt", "a", encoding="utf-8")  #ログファイルを追記モードで開く
@@ -116,5 +121,8 @@ if __name__ == "__main__":
         #引数がないときは今いるフォルダを対象にする
         target_folder = os.getcwd()
 
-    organize_folder(target_folder, dry_run)
+    if os.path.isfile(target_folder):
+        organize_file(target_folder, dry_run)
+    else:
+        organize_folder(target_folder, dry_run)
 
