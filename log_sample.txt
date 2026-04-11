@@ -1,0 +1,3 @@
+[2026-04-11 21:05:29] sample.csv → CSV/sample_3.csv に移動しました
+[2026-04-11 21:38:29] [DRY-RUN] sample.csv → CSV/sample.csv
+[2026-04-11 21:45:00] ERROR: フォルダが見つかりません: aaaabbbb

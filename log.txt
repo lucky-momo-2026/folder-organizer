@@ -1,2 +1,25 @@
 sample.csv → CSV に移動しました
 test.txt → その他 に移動しました
+sample.csv → CSV に移動しました
+image.png → 画像 に移動しました
+sample.csv → CSV に移動しました
+test.pdf → PDF に移動しました
+sample.csv → CSV に移動しました
+sample_1.csv → CSV に移動しました
+test.txt → その他 に移動しました
+ERROR: フォルダが見つかりません：aaaabbbb
+[2026-04-11 14:26:34] sample.csv → CSV に移動しました
+[2026-04-11 14:30:17] ERROR: フォルダが見つかりません：aaaabbbb
+[2026-04-11 14:30:48] ERROR: フォルダが見つかりません：sample.csv
+[2026-04-11 14:40:20] ERROR: フォルダが見つかりません：aaaabbbb
+[2026-04-11 14:40:28] ERROR: フォルダが見つかりません：sample.csv
+[2026-04-11 14:42:52] ERROR: フォルダではありません：sample.csv
+[2026-04-11 14:55:50] ERROR: フォルダが見つかりません：--dry-run
+[2026-04-11 14:59:43] sample.csv → CSV に移動しました
+[2026-04-11 15:26:34] sample.csv → CSV に移動しました
+[2026-04-11 15:29:11] sample.csv → CSV に移動しました
+[2026-04-11 15:43:23] [DRY-RUN] sample.csv → CSV/sample_3.csv
+[2026-04-11 21:05:29] sample.csv → CSV/sample_3.csv に移動しました
+[2026-04-11 21:38:29] [DRY_RUN] sample.csv → CSV/sample.csv/n[2026-04-11 21:38:51] [DRY_RUN] sample.csv → CSV/sample.csv/n[2026-04-11 21:42:16] sample.csv → CSV/sample.csv に移動しました/n[2026-04-11 22:11:24] [DRY-RUN] sample.csv → CSV/sample.csv
+[2026-04-11 22:13:05] [DRY-RUN] README.md → その他/README.md
+[2026-04-11 22:13:05] [DRY-RUN] sample.csv → CSV/sample.csv
