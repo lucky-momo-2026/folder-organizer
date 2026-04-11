@@ -44,7 +44,10 @@ def get_unique_file_path(target_folder_path, file_name):
 
 #１ファイルだけ整理する処理
 def organize_file(file_path, dry_run):
-    print("ここに１ファイル処理を書いていきます")
+    file_name = os.path.basename(file_path)  #ファイル名を取得
+    folder_name = get_folder_name(file_name)  #拡張子からフォルダ名を決める
+
+    print(f"{file_name} は {folder_name} フォルダに分類されます")
 
 
 # フォルダ整理ツールのメイン処理　今はファイルごとの移動先フォルダ名を表示する
