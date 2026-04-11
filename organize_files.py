@@ -49,6 +49,11 @@ def organize_folder(target_folder):
         print(f"フォルダが見つかりません：{target_folder}")
         return
     
+    #フォルダではなくファイルが指定された場合のチェック
+    if not os.path.isdier(target_folder):
+        print(f"フォルダではありません：{target_folder}")
+        return
+    
     #フォルダ内の名前を１つずつ取り出す
     for item_name in os.listdir(target_folder):
         item_path = os.path.join(target_folder, item_name)
