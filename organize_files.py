@@ -1,4 +1,5 @@
 import os
+import sys #コマンドライン引数を受け取るため
 import shutil  #ファイル異動で使う（次ステップ用）
 
 
@@ -74,7 +75,7 @@ def organize_folder(target_folder):
             #ファイルを移動する
             shutil.move(item_path, target_file_path)
 
-            #字z際に保存されたファイル名を取得する
+            #実際に保存されたファイル名を取得する
             moved_file_name = os.path.basename(target_file_path)            
 
             print(f"{item_name} → {folder_name}/{moved_file_name} に移動しました")
@@ -86,6 +87,11 @@ def organize_folder(target_folder):
 
 #プログラムの開始位置
 if __name__ == "__main__":
-    #今回は自分のるフォルダを対象にする
-    current_folder = os.getcwd()
-    organize_folder(current_folder)
+    #引数があれば、、そのフォルダを整理対象にする
+    if len(sys.argv) > 1:
+        target_folder = sys.argv[1]
+    else:
+        #引数がないときは今いるフォルダを対象にする
+        target_folder = os.getcwd()
+    organize_folder(target_folder)
+
