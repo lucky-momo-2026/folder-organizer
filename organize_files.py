@@ -46,8 +46,34 @@ def get_unique_file_path(target_folder_path, file_name):
 def organize_file(file_path, dry_run):
     file_name = os.path.basename(file_path)  #ファイル名を取得
     folder_name = get_folder_name(file_name)  #拡張子からフォルダ名を決める
+    base_folder = os.path.dirname(file_path)  #元フォルダパスを取得
+    target_folder_path = os.path.join(base_folder, folder_name)  #移動先のフォルダパスを作る
 
-    print(f"{file_name} は {folder_name} フォルダに分類されます")
+    #フォルダがなければ作成
+    if not os.path.exists(target_folder_path):
+        os.makedirs(target_folder_path)
+        print(f"{folder_name} フォルダを作成しました")
+
+    #移動先のファイルパスを作る（重複回避）
+    target_file_path = get_unique_file_path(target_folder_path, file_name)
+
+    #保存されるファイル名
+    saved_file_name = os.path.basename(target_file_path)
+
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  #現在日時
+
+    log_file= open("log.txt", "a", encoding="utf-8")  #ログファイル
+
+    if dry_run:
+        print(f"[DRY-RUN] {file_name} → {folder_name}/{saved_file_name}")
+        log_file.write(f"[{now}] [DRY-RUN] {file_name} → {folder_name}/{saved_file_name}/n")
+    else:
+        shutil.move(file_path, target_file_path)
+        print(f"{file_name} → {folder_name}/{saved_file_name} に移動しました")
+        log_file.write(f"[{now}] {file_name} → {folder_name}/{saved_file_name} に移動しました/n")
+    
+    log_file.close()
+
 
 
 # フォルダ整理ツールのメイン処理　今はファイルごとの移動先フォルダ名を表示する
@@ -100,7 +126,7 @@ def organize_folder(target_folder, dry_run):
 
             #dry-runのときは移動せず表示とログだけ行う
             if dry_run:
-                print(f"[DRY_RUN] {item_name} → {folder_name}/{saved_file_name}")
+                print(f"[DRY-RUN] {item_name} → {folder_name}/{saved_file_name}")
                 log_file.write(f"[{now}] [DRY-RUN] {item_name} → {folder_name}/{saved_file_name}\n")
             else:
                 shutil.move(item_path, target_file_path)
